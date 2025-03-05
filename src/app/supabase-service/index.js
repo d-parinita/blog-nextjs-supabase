@@ -53,3 +53,36 @@ export const getUserData = async() => {
         throw error;
     }
 }
+
+export const uploadFile = async(image, folder) => {
+    try {
+        if (!image) {
+            return null;
+        }
+        const { data, error } = await supabase.storage
+            .from(folder)
+            .upload(`public/${Date.now()}_${image.name}`, image);
+        if (error) {
+            return null;
+        }
+        return `https://oeeotrloowgarosklmzz.supabase.co/storage/v1/object/public/${data.fullPath}`;
+    } catch (error) {
+        return null;
+    }
+}
+
+export const addBlogData = async(payload, table) => {
+    try {
+        const { data, error } = await supabase
+            .from(table)
+            .insert([
+                payload
+            ]);
+        if (error) {
+            throw new Error(error.message);
+        }
+        return data;
+    } catch (error) {
+        throw new Error(`Error inserting user data: ${error.message}`);
+    }
+};
