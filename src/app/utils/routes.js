@@ -3,5 +3,7 @@ export const routes = {
     SIGNUP: '/signup',
     LOGIN: '/login',
     HOME: '/',
-    ALLBLOGS: '/allBlogs'
+    ALLBLOGS: '/allBlogs',
+    MYBLOGS: '/myBlogs',
+    BLOGDETAILS: '/blogDetails'
 }

@@ -86,3 +86,18 @@ export const addBlogData = async(payload, table) => {
         throw new Error(`Error inserting user data: ${error.message}`);
     }
 };
+
+export const getBlogFromDb = async(table, limit = 10, offset = 0) => {
+    try {
+        const { data, error, count } = await supabase
+            .from(table)
+            .select("*", { count: "exact" })
+            .range(offset, offset + limit - 1);
+        if (error) {
+            throw new Error(error.message);
+        }
+        return { data, count };
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error.message}`);
+    }
+};

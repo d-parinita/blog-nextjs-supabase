@@ -1,13 +1,25 @@
 import React from 'react'
 
-export default function BlogCard() {
+export default function BlogCard({ image, title, shortDesc}) {
   return (
     <>
-        <div className="max-w-sm mt-12 ml-12 overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
-            <img className="w-full h-50 object-cover" src="https://images.pexels.com/photos/1591056/pexels-photo-1591056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Card Image" />
+        <div className="max-w-sm overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
+            <img className="w-full h-50 object-cover" src={image} alt="Card Image" />
             <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2">Card Title</h2>
-                <p className="text-gray-600">This is a short description of the card content. It provides a brief insight into what this card is about.</p>
+                <h2 className="text-xl font-semibold mb-2">{title}</h2>
+                <p className="text-gray-600">{shortDesc}</p>
+                {/* <div className="flex justify-between mt-4">
+                  <button 
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                  >
+                    Edit
+                  </button>
+                  <button 
+                    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                  >
+                    Delete
+                  </button>
+                </div> */}
             </div>
         </div>
     </>

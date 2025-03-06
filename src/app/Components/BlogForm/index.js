@@ -83,7 +83,7 @@ export default function BlogForm() {
 
   return (
     <>
-    <div className="max-w-6xl mt-12 mx-auto bg-white p-6 shadow-lg rounded-lg">
+    <div className="max-w-6xl my-12 mx-auto bg-white p-6 shadow-lg rounded-lg">
       <div className='text-3xl pb-8'>Upload Blogs</div>
 
       <input onChange={handleFileChange} type="file" className="w-full p-2 border rounded-md mb-4" accept="image/*"/>
