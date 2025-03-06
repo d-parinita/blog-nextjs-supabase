@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import BlogCard from "../Components/BlogCard";
 import { getBlogFromDb } from "../supabase-service";
 import { constVariables } from "../utils/constVariables";
+import { routes } from "../utils/routes";
+import Link from "next/link";
 
 export default function Page() {
 
@@ -35,11 +37,13 @@ export default function Page() {
         <div className="text-center text-3xl font-bold m-10">All Blogs</div>
         {data?.map((item, i) => (
           <Fragment key={i}>
-            <BlogCard 
-              image={item?.image}
-              title={item?.title}
-              shortDesc={item?.short_desc}
-            />
+            <Link href={routes.BLOGDETAILS + '/' + item?.id}>
+              <BlogCard 
+                image={item?.image}
+                title={item?.title}
+                shortDesc={item?.short_desc}
+              />
+            </Link>
           </Fragment>
         ))}
       </div>

@@ -1,23 +1,45 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Editor } from "@tinymce/tinymce-react";
-import { addBlogData, getUserData, uploadFile } from '@/app/supabase-service';
+import { addBlogData, getBlogById, getUserData, updateInDb, uploadFile } from '@/app/supabase-service';
 import { toast } from 'react-toastify';
 import { constVariables } from '@/app/utils/constVariables';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
+import { routes } from '@/app/utils/routes';
 const TinyMCEEditor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Editor), { ssr: false });
 
-export default function BlogForm() {
+export default function BlogForm({id}) {
 
-  const [data, setData] = useState([])
+  const router = useRouter()
   const [blogData, setBlogData] = useState({
     image: '',
     title: '',
-    shortDesc: '',
-    id: ''
+    short_desc: '',
+    id: '',
   })
   const [desc, setDesc] = useState('')
   const [image, setImage] = useState(null)
+
+  useEffect(() => {
+    if (id) {
+      getBlog(id);
+    }
+  }, [id])
+
+  const getBlog = async (id) => {
+    try {
+      const data = await getBlogById(id, constVariables.TABLES.BLOGS)
+      setBlogData({
+        image: data?.image,
+        title: data?.title,
+        short_desc: data?.short_desc,
+        id: data?.user_id,
+      })
+      setDesc(data?.desc)
+    } catch (error) {
+      toast.error("Error fetching data");
+    }
+  }
 
   const userData = async() => {
     const response = await getUserData()
@@ -25,15 +47,12 @@ export default function BlogForm() {
       id: response?.user?.id
     })
     if (response?.error) {
-      console.log('error');
+      toast.error("Error fetching user");
     }
   }
 
   const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
+    setImage(e.target.files?.[0]);
   }
 
   const handleSubmit = async () => {
@@ -54,16 +73,25 @@ export default function BlogForm() {
         title: blogData?.title, 
         desc: desc, 
         image: imageUrl,
-        short_desc: blogData?.shortDesc,
+        short_desc: blogData?.short_desc,
         user_id: blogData?.id
-      };
-      console.log(payload);
-      
-      try {
-        const addData = await addBlogData(payload, constVariables.TABLES.BLOGS);
-        toast.success('Blog posted successfully!');
-      } catch (error) {
-        toast.error('Error adding data');
+      }
+      if (id) {
+        try {
+          const update = await updateInDb(id, payload, constVariables.TABLES.BLOGS);
+          toast.success('Updated successfully');
+          router.push(routes.ALLBLOGS)
+        } catch (error) {
+          toast.error('Error updating blog');
+        }
+      } else {
+        try {
+          const addData = await addBlogData(payload, constVariables.TABLES.BLOGS);
+          toast.success('Blog posted successfully!');
+          router.push(routes.ALLBLOGS)
+        } catch (error) {
+          toast.error('Error adding data');
+        }
       }
       setBlogData({...blogData,
         image: '',
@@ -97,8 +125,8 @@ export default function BlogForm() {
       />
 
       <textarea
-        onChange={(e) => setBlogData({...blogData, shortDesc: e.target.value})}
-        value={blogData?.shortDesc}
+        onChange={(e) => setBlogData({...blogData, short_desc: e.target.value})}
+        value={blogData?.short_desc}
         className="w-full p-2 border rounded-md mb-4"
         rows={3}
         placeholder="Short Description"
@@ -106,6 +134,7 @@ export default function BlogForm() {
 
       <TinyMCEEditor
         apiKey='igbxa8s1rfgyyy8sd59uq442qr8rtv3o8l624jp27e72dnur'
+        value={desc}
         init={{
           height: 300,
           menubar: false,
@@ -119,7 +148,7 @@ export default function BlogForm() {
         }}
       />
 
-      <button onClick={handleSubmit} className="w-full mt-4 bg-blue-600 text-white p-2 rounded-md">Submit</button>
+      <button onClick={handleSubmit} className="w-full mt-4 bg-blue-600 text-white p-2 rounded-md">{id ? 'Update Blog' : 'Add Blog'}</button>
     </div>  
     </>
   )

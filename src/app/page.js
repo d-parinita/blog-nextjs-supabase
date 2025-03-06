@@ -5,6 +5,8 @@ import Hero from "./Components/Hero";
 import { getBlogFromDb } from "./supabase-service";
 import { constVariables } from "./utils/constVariables";
 import { toast } from "react-toastify";
+import Link from "next/link";
+import { routes } from "./utils/routes";
 
 export default function Home() {
 
@@ -37,11 +39,13 @@ export default function Home() {
         <div className="text-center text-3xl font-bold m-10">Featured Blogs</div>
         {data?.map((item, i) => (
           <Fragment key={i}>
-            <BlogCard
-              image={item?.image}
-              title={item?.title}
-              shortDesc={item?.short_desc}
-            />
+            <Link href={routes.BLOGDETAILS + '/' + item?.id}>
+              <BlogCard
+                image={item?.image}
+                title={item?.title}
+                shortDesc={item?.short_desc}
+              />
+            </Link>
           </Fragment>
         ))}
       </div>

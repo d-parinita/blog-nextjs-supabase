@@ -101,3 +101,64 @@ export const getBlogFromDb = async(table, limit = 10, offset = 0) => {
         throw new Error(`Error fetching data: ${error.message}`);
     }
 };
+
+export const getBlogById = async(id, table) => {
+    try {
+        const { data, error } = await supabase
+            .from(table)
+            .select('*')
+            .eq('id', id)
+            .single();
+        if (error) {
+            return null;
+        }
+        return data;
+    } catch (error) {
+        return null;
+    }
+}
+
+export const getMyBlogFromDb = async(table, limit = 10, offset = 0, userId) => {
+    try {
+        const { data, error, count } = await supabase
+            .from(table)
+            .select("*", { count: "exact" })
+            .eq('user_id', userId)
+            .range(offset, offset + limit - 1)
+        if (error) {
+            throw new Error(error.message);
+        }
+        return { data, count };
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error.message}`);
+    }
+}
+
+export const deleteFromDb = async (table, id) => {
+    try {
+        const { error, data } = await supabase.from(table).delete().eq('id', id);
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        throw new Error('Failed to delete the document.');
+    }
+};
+
+export const updateInDb = async (id, payload, table) => {
+    try {
+        const { data, error } = await supabase
+            .from(table)
+            .update(payload)
+            .eq('id', id)
+            .select();
+        if (error) {
+            throw new Error(`Error: ${error.message}`);
+        }
+        if (data.length === 0) {
+            return null;
+        }
+        return data;
+    } catch (error) {
+        throw new Error(`Error updating data: ${error.message}`);
+    }
+};

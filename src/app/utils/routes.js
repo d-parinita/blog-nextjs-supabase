@@ -5,5 +5,6 @@ export const routes = {
     HOME: '/',
     ALLBLOGS: '/allBlogs',
     MYBLOGS: '/myBlogs',
-    BLOGDETAILS: '/blogDetails'
+    BLOGDETAILS: '/blogDetails',
+    UPDATEBLOG: '/updateBlog'
 }

@@ -49,7 +49,7 @@ export default function Navbar() {
             <Link href={routes.LOGIN} className="px-4 py-2 bg-blue-600 text-white rounded-md">Login</Link>
           </>) : (<>
             <Link href={routes.BLOGFORM} className="py-2">Upload Blogs</Link>
-            <Link href="#" className="px-4 py-2">My Blogs</Link>
+            <Link href={routes.MYBLOGS} className="px-4 py-2">My Blogs</Link>
             <button onClick={logout} className="px-4 py-2 bg-red-600 text-white rounded-md">Logout</button>
           </>)}
         </div>
@@ -68,7 +68,7 @@ export default function Navbar() {
             <Link href={routes.LOGIN} className="block bg-blue-600 text-white px-4 py-2 rounded-md">Login</Link>
           </>) : (<>
             <Link href={routes.BLOGFORM} className="block text-blue-600">Upload Blogs</Link>
-            <Link href="#" className="block px-4 py-2 rounded-md">My Blogs</Link>
+            <Link href={routes.MYBLOGS} className="block px-4 py-2 rounded-md">My Blogs</Link>
             <button onClick={logout} className="block bg-red-600 text-white px-4 py-2 rounded-md">Logout</button>
           </>)}
         </div>
