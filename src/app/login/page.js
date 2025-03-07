@@ -28,7 +28,7 @@ export default function Page() {
         email: '',
         password: ''
       })
-      router.push(routes.HOME)
+      window.location.href="/"
     } catch (error) {
       throw error
     } finally {
@@ -66,7 +66,7 @@ export default function Page() {
         Login
       </button>
       <p className="text-center mt-4 text-gray-600">
-        Don't have an account? <Link href={routes.SIGNUP} className="text-blue-600">Sign Up</Link>
+        Don&apos;t have an account? <Link href={routes.SIGNUP} className="text-blue-600">Sign Up</Link>
       </p>
     </div>
   );

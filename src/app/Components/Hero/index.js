@@ -7,7 +7,7 @@ export default function Hero() {
     <>
     <div className="relative w-full h-[500px] flex items-center justify-center">
       <img
-        src="https://images.pexels.com/photos/4348404/pexels-photo-4348404.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        src="./images/heroBg.jpg"
         alt="Hero Background"
         className="absolute inset-0 w-full h-full object-cover"
       />

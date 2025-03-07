@@ -149,7 +149,7 @@ export default function BlogForm({id}) {
       ></textarea>
 
       <TinyMCEEditor
-        apiKey='igbxa8s1rfgyyy8sd59uq442qr8rtv3o8l624jp27e72dnur'
+        apiKey={process.env.NEXT_PUBLIC_TINY_MICE_KEY}
         value={desc}
         init={{
           height: 300,

@@ -28,7 +28,7 @@ export default function Page() {
         email: '',
         password: ''
       })
-      router.push(routes.HOME)
+      window.location.href="/"
     } catch (error) {
       throw error
     } finally {

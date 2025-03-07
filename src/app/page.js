@@ -13,19 +13,15 @@ export default function Home() {
 
   const { setLoading } = useLoader()
   const [data, setData] = useState([])
-  const [page, setPage] = useState(1)
-  const limit = 10
+  const [page, setPage] = useState(1);
+  const limit = 8;
 
   const getBlogData = async () => {
     setLoading(true)
     try {
       const offset = (page - 1) * limit;
       const { data, count } = await getBlogFromDb(constVariables.TABLES.BLOGS, limit, offset);
-      console.log(data);
-      console.log(count);
-      
       setData(data);
-      // setTotalCount(count); 
     } catch (error) {
       toast.error("Error fetching data");
     } finally {
@@ -54,6 +50,14 @@ export default function Home() {
               </Link>
             </Fragment>
           ))}
+        </div>
+        <div className="mt-6 flex justify-end">
+          <Link
+            href={routes.ALLBLOGS}
+            className="px-6 py-3 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition"
+          >
+            View all Blogs
+          </Link>
         </div>
       </div>
     </>

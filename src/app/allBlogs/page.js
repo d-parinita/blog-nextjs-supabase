@@ -13,19 +13,19 @@ export default function Page() {
   const { setLoading } = useLoader()
 
   const [data, setData] = useState([])
-  const [page, setPage] = useState(1)
-  const limit = 10
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const limit = 8;
+  const totalPages = Math.ceil(totalCount / limit);
+  const showPagination = totalCount > limit;
 
   const getBlogData = async () => {
     setLoading(true)
     try {
       const offset = (page - 1) * limit;
       const { data, count } = await getBlogFromDb(constVariables.TABLES.BLOGS, limit, offset);
-      console.log(data);
-      console.log(count);
-
       setData(data);
-      // setTotalCount(count); 
+      setTotalCount(count); 
     } catch (error) {
       toast.error("Error fetching data");
     } finally {
@@ -35,7 +35,7 @@ export default function Page() {
 
   useEffect(() => {
     getBlogData()
-  }, [])
+  }, [page])
 
   return (
     <>
@@ -54,6 +54,29 @@ export default function Page() {
             </Fragment>
           ))}
         </div>
+        {showPagination && (
+          <div className="flex items-center justify-center mt-8 mb-20 space-x-4">
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+              className="px-3 py-1 text-xs font-medium text-gray-800 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition-all duration-200"
+            >
+              Prev
+            </button>
+
+            <span className="text-xs font-medium text-gray-700">
+              {page} / {totalPages}
+            </span>
+
+            <button
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+              className="px-3 py-1 text-xs font-medium text-gray-800 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition-all duration-200"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </>
   )
