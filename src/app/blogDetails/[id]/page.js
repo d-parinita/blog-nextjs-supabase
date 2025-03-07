@@ -1,4 +1,5 @@
 'use client'
+import { useLoader } from '@/app/context/LoaderContext';
 import { getBlogById } from '@/app/supabase-service';
 import { constVariables } from '@/app/utils/constVariables';
 import React, { use, useEffect, useState } from 'react'
@@ -6,15 +7,19 @@ import { toast } from 'react-toastify';
 
 export default function Page({params}) {
 
+  const { setLoading } = useLoader()
   const {id} = use(params)
   const [blog, setBlog] = useState(null)
 
   const getBlog = async() => {
+    setLoading(true)
     try {
       const data = await getBlogById(id, constVariables.TABLES.BLOGS);
       setBlog(data)
     } catch (error) {
       toast.error("Error fetching data");
+    } finally {
+      setLoading(false)
     }
   }
 

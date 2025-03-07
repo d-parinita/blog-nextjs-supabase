@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { routes } from "../utils/routes";
 import { login } from "../supabase-service";
 import { useRouter } from "next/navigation";
+import { useLoader } from "../context/LoaderContext";
 
 export default function Page() {
 
+  const { setLoading } = useLoader()
   const router = useRouter()
 
   const [userData, setUserData] = useState({
@@ -15,6 +17,7 @@ export default function Page() {
   })
 
   const handleLogin = async () => {
+    setLoading(true)
     const payload = {
       email: userData?.email,
       password: userData?.password
@@ -28,6 +31,8 @@ export default function Page() {
       router.push(routes.HOME)
     } catch (error) {
       throw error
+    } finally {
+      setLoading(false)
     }
   }
 

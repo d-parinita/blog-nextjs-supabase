@@ -1,21 +1,27 @@
 'use client'
+import { useLoader } from "@/app/context/LoaderContext";
 import { getUserData, signOut } from "@/app/supabase-service";
 import { routes } from "@/app/utils/routes";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { MdMenu } from "react-icons/md";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
 
+  const { setLoading } = useLoader()
+  const router = useRouter()
   const [user, setUser] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
 
   const logout = async() => {
     const data = await signOut()
-    console.log('fdghdgh');
     setUser(null)
     if(data?.error){
       toast.error(data?.error)
     }
+    router.push(routes.HOME)
   }
 
   const userData = async() => {
@@ -24,9 +30,8 @@ export default function Navbar() {
       email: response?.user?.email,
       id: response?.user?.id
     })
-    console.log(response.user);
     if(response?.error){
-      console.log('error');
+      toast.error('Error fetching user')
     }
   }
 
@@ -38,7 +43,7 @@ export default function Navbar() {
     <nav className="bg-white shadow-md px-6 py-3">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-6">
-          <Link href={routes.HOME} className="text-xl font-bold">Logo</Link>
+          <Link href={routes.HOME} className="text-xl font-bold">BlogBrand</Link>
           <Link href={routes.HOME} className="hidden md:block">Home</Link>
           <Link href={routes.ALLBLOGS} className="hidden md:block">All Blogs</Link>
         </div>
@@ -55,7 +60,7 @@ export default function Navbar() {
         </div>
 
         <button className="md:hidden text-gray-600" onClick={() => setIsOpen(!isOpen)}>
-          ☰
+          <MdMenu/>
         </button>
       </div>
 

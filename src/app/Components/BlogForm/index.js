@@ -6,9 +6,12 @@ import { constVariables } from '@/app/utils/constVariables';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/app/utils/routes';
+import { useLoader } from '@/app/context/LoaderContext';
 const TinyMCEEditor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Editor), { ssr: false });
 
 export default function BlogForm({id}) {
+
+  const { setLoading } = useLoader()
 
   const router = useRouter()
   const [blogData, setBlogData] = useState({
@@ -27,6 +30,7 @@ export default function BlogForm({id}) {
   }, [id])
 
   const getBlog = async (id) => {
+    setLoading(true)
     try {
       const data = await getBlogById(id, constVariables.TABLES.BLOGS)
       setBlogData({
@@ -38,6 +42,8 @@ export default function BlogForm({id}) {
       setDesc(data?.desc)
     } catch (error) {
       toast.error("Error fetching data");
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -56,6 +62,7 @@ export default function BlogForm({id}) {
   }
 
   const handleSubmit = async () => {
+    setLoading(true)
     try {
       let finalImageUrl = blogData?.image;
       if (image) {
@@ -64,10 +71,13 @@ export default function BlogForm({id}) {
       await saveBlogData(finalImageUrl); 
     } catch (error) {
       toast.error('Error saving blog: ' + error.message);
+    } finally {
+      setLoading(false)
     }
   }
 
   const saveBlogData = async(imageUrl) => {
+    setLoading(true)
     try {
       const payload = { 
         title: blogData?.title, 
@@ -83,6 +93,8 @@ export default function BlogForm({id}) {
           router.push(routes.ALLBLOGS)
         } catch (error) {
           toast.error('Error updating blog');
+        } finally {
+          setLoading(false)
         }
       } else {
         try {
@@ -91,6 +103,8 @@ export default function BlogForm({id}) {
           router.push(routes.ALLBLOGS)
         } catch (error) {
           toast.error('Error adding data');
+        } finally {
+          setLoading(false)
         }
       }
       setBlogData({...blogData,
@@ -102,6 +116,8 @@ export default function BlogForm({id}) {
       setImage(null)
     } catch (error) {
       toast.error('Error saving blog');
+    } finally {
+      setLoading(false)
     }
   }
 

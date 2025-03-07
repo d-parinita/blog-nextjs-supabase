@@ -6,19 +6,19 @@ export default function BlogCard({ image, title, shortDesc, isPathMyBlog=false, 
         <div className="max-w-sm overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
             <img className="w-full h-50 object-cover" src={image} alt="Card Image" />
             <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2">{title}</h2>
-                <p className="text-gray-600">{shortDesc}</p>
+                <h2 className="text-xl line-clamp-2 font-semibold mb-2">{title}</h2>
+                <p className="text-gray-600 line-clamp-3">{shortDesc}</p>
                 {isPathMyBlog ? (<>
-                  <div className="flex justify-between mt-4">
-                    <button 
+                  <div className="flex justify-end items-center mt-3 gap-2">
+                    <button
                       onClick={edit}
-                      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                      className="bg-blue-500 text-white px-3 py-1.5 text-xs rounded-md shadow hover:bg-blue-600 hover:scale-105 transition-all"
                     >
                       Edit
                     </button>
-                    <button 
+                    <button
                       onClick={deleteBlog}
-                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                      className="bg-red-500 text-white px-3 py-1.5 text-xs rounded-md shadow hover:bg-red-600 hover:scale-105 transition-all"
                     >
                       Delete
                     </button>
