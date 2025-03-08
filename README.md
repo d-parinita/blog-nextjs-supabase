@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Blog Website using Next.js and Supabase
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This is a fully functional blog website built with Next.js, Supabase, and Tailwind CSS. Users can read blogs, upload, edit, and delete their own blog posts. Authentication, database management, and storage functionalities are powered by Supabase.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Technologies Used
+
+**Frontend** - Next.js and Tailwind CSS
+
+**Backend** - Supabase (Auth, Database, Storage)
+
+**Database** - PostgreSQL (managed by Supabase)
+
+**Context API** - Handles global state management efficiently.
+
+## Features
+
+**User Authentication** - Sign up, log in, and log out with Supabase Auth.
+
+**Blog Management** - Create, edit, and delete blog posts, and store blog images using Supabase Storage.
+
+**Responsive UI** - Styled with Tailwind CSS for a modern and mobile-friendly design.
+
+## Prerequisites for Setting Up the Project
+
+### 1. Clone the Repository:
+
+```sh
+git clone https://github.com/d-parinita/blog-nextjs-supabase.git
+cd blog-nextjs-supabase 
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```sh
+npm install  # or yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Create a .env file in the root directory and add your Supabase credentials:
 
-## Learn More
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_KEY=your-anon-key
+NEXT_PUBLIC_TINY_MICE_KEY=your-tiny-mice-key
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Running the Project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Start the development server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+npm run dev  # or yarn dev
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open http://localhost:3000 in your browser.
