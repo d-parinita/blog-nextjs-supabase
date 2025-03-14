@@ -65,7 +65,7 @@ export const uploadFile = async(image, folder) => {
         if (error) {
             return null;
         }
-        return `https://oeeotrloowgarosklmzz.supabase.co/storage/v1/object/public/${data.fullPath}`;
+        return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data.fullPath}`;
     } catch (error) {
         return null;
     }
